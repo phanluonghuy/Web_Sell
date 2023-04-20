@@ -1,0 +1,64 @@
+﻿@model Web_Sell.Models.Cart
+
+@{
+    ViewBag.Title = "ShowToCart";
+    //Layout = "~/Views/_LayoutHome.cshtml";
+}
+
+<h2>ShowToCart</h2>
+@if (Model != null)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Image</th>
+                <th>Price</th>
+                <th>Quanity</th>
+                <th>Sum</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                double total = ((double)item._shopping_products.UnitPrice) * item._shopping_quanity;
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => item._shopping_products.ProductName)
+                    </td>
+                    <td>
+                        <img src="data:image;base64,@System.Convert.ToBase64String(item._shopping_products.ProImage)" width="80" height="80" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item._shopping_products.UnitPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item._shopping_quanity)
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("Update_Quantity_Product", "ShoppingCart"))
+                        {
+                        <input type="hidden" value="@item._shopping_products.ProductID" name="Product_ID" />
+                        <input type="number" value="@item._shopping_quanity" name="Product_Quantity" />
+                        <input type="submit" value="Update Quantity">
+                        }
+                    </td>
+                    <td>
+                        Total : @total
+                    </td>
+                    <td>
+                        <a href="/ShoppingCart/RemoveProduct/@item._shopping_products.ProductID">Remove</a>
+                    </td>
+                </tr>
+               
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="5">Sum Total: @Model.total_money()</td>
+            </tr>
+        </tfoot>
+    </table>
+    <a href="@Url.Action("Index","Home")">Countinue to shopping</a>
+}

@@ -25,6 +25,10 @@ namespace Web_Sell.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Agents> Agents { get; set; }
+        public virtual DbSet<DeliverySlips> DeliverySlips { get; set; }
+        public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Products> Products { get; set; }
+        public virtual DbSet<OrderDetails> OrderDetails { get; set; }
     }
 }

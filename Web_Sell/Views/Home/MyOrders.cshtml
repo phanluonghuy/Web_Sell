@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Web_Sell.Models.Orders>
+
+@{
+    ViewBag.Title = "My Orders";
+    //Layout = "~/Views/_LayoutHome.cshtml";
+}
+
+<h2>My Orders</h2>
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
+                    @Html.DisplayFor(model => item.OrderID) @Html.DisplayFor(model => item.PaymentMethod) @Html.DisplayFor(model => item.PaymentStatus) <br>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>

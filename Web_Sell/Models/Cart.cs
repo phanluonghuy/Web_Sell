@@ -57,5 +57,9 @@ namespace Web_Sell.Models
         {
             return items.Count();
         }
+        public void clearCart()
+        {
+            items.Clear();
+        }
     }
 }

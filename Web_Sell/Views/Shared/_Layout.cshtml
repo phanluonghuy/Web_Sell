@@ -23,7 +23,8 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li> 
+                    <li>@Html.ActionLink("My Order", "MyOrders", "Home")</li>
+                    <li>
                         <a href="/ShoppingCart/ShowToCart">
                             <img src="@Url.Content("~/Content/shopping-cart.png")" style="height:30px;width:30px;background-color:lavenderblush;" />
                             @Html.Action("BagCart", "ShoppingCart")

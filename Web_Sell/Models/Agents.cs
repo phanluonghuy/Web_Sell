@@ -12,22 +12,21 @@ namespace Web_Sell.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Products
+    public partial class Agents
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Products()
+        public Agents()
         {
-            this.OrderDetails = new HashSet<OrderDetails>();
+            this.Orders = new HashSet<Orders>();
         }
     
-        public string ProductID { get; set; }
-        public string ProductName { get; set; }
-        public string Description { get; set; }
-        public string Brand { get; set; }
-        public decimal UnitPrice { get; set; }
-        public byte[] ProImage { get; set; }
+        public string AgentID { get; set; }
+        public string AgentName { get; set; }
+        public string ContactName { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<OrderDetails> OrderDetails { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
     }
 }

@@ -134,7 +134,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Agents.cs">
+      <DependentUpon>Model_Product.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Cart.cs" />
+    <Compile Include="Models\DeliverySlips.cs">
+      <DependentUpon>Model_Product.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Model_Product.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -149,6 +155,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Model_Product.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\OrderDetails.cs">
+      <DependentUpon>Model_Product.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Orders.cs">
+      <DependentUpon>Model_Product.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Products.cs">
       <DependentUpon>Model_Product.tt</DependentUpon>
@@ -210,6 +222,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\ShoppingCart\ShowToCart.cshtml" />
     <Content Include="Views\ShoppingCart\BagCart.cshtml" />
+    <Content Include="Views\ShoppingCart\Checkout_Success.cshtml" />
+    <Content Include="Views\Home\MyOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

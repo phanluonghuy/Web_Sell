@@ -28,5 +28,10 @@ namespace Web_Sell.Controllers
 
             return View();
         }
+
+        public ActionResult MyOrders()
+        {
+            return View(_db.Orders.ToList());
+        }
     }
 }

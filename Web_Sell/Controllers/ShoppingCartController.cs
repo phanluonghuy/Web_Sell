@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Description;
 using Web_Sell.Models;
-using System.Diagnostics;
 
 namespace Web_Sell.Controllers
 {
@@ -74,6 +71,43 @@ namespace Web_Sell.Controllers
             }
             ViewBag.infoCart = _t_item;
             return PartialView("BagCart");
+        }
+        public ActionResult Checkout_Success()
+        {
+            return View();
+        }
+
+        public ActionResult CheckOut(FormCollection form)
+        {
+            try
+            {
+                Cart cart = Session["Cart"] as Cart;
+                Orders _orders = new Orders();
+                _orders.OrderID = DateTime.Now.ToString("yyyyMMddHHmmss");
+                _orders.AgentID = form["AgentID"];
+                _orders.OrderDate = DateTime.Now;
+
+                //_orders.TotalAmount = (decimal)form["Total_money"];
+                _orders.TotalAmount = decimal.Parse(form["Total_money"]);
+                _orders.PaymentMethod = form["Payment"];
+                _orders.PaymentStatus = "Pending";
+                _db.Orders.Add(_orders);
+                foreach (var item in cart.Items)
+                {
+                    OrderDetails _orderDetails = new OrderDetails();
+                    _orderDetails.OrderID = _orders.OrderID;
+                    _orderDetails.ProductID = item._shopping_products.ProductID;
+                    _orderDetails.Quantity = item._shopping_quanity;
+                    _db.OrderDetails.Add(_orderDetails);
+                }
+                _db.SaveChanges();
+                cart.clearCart();
+                return RedirectToAction("Checkout_Success","ShoppingCart");
+            }
+            catch
+            {
+                return Content("Error");
+            }
         }
 
 

@@ -41,7 +41,7 @@ namespace Web_Sell.Controllers
         {
             if (Session["Cart"] == null)
             {
-                return RedirectToAction("ShowToCart", "ShoppingCart");
+                return RedirectToAction("Index", "Home");
 
             }
             Cart cart = Session["Cart"] as Cart;
@@ -76,38 +76,51 @@ namespace Web_Sell.Controllers
         {
             return View();
         }
+        public ActionResult Checkout_Fail() {
+            return View();
+        }
 
         public ActionResult CheckOut(FormCollection form)
         {
-            try
+            Cart cart = Session["Cart"] as Cart;
+            Orders _orders = new Orders();
+            if (Session["AgentID"] != null)
             {
-                Cart cart = Session["Cart"] as Cart;
-                Orders _orders = new Orders();
-                _orders.OrderID = DateTime.Now.ToString("yyyyMMddHHmmss");
-                _orders.AgentID = form["AgentID"];
-                _orders.OrderDate = DateTime.Now;
-
-                //_orders.TotalAmount = (decimal)form["Total_money"];
-                _orders.TotalAmount = decimal.Parse(form["Total_money"]);
-                _orders.PaymentMethod = form["Payment"];
-                _orders.PaymentStatus = "Pending";
-                _db.Orders.Add(_orders);
-                foreach (var item in cart.Items)
+                try
                 {
-                    OrderDetails _orderDetails = new OrderDetails();
-                    _orderDetails.OrderID = _orders.OrderID;
-                    _orderDetails.ProductID = item._shopping_products.ProductID;
-                    _orderDetails.Quantity = item._shopping_quanity;
-                    _db.OrderDetails.Add(_orderDetails);
+                    
+                    _orders.OrderID = DateTime.Now.ToString("yyyyMMddHHmmss");
+                    _orders.AgentID = (string)Session["AgentID"];
+                    _orders.OrderDate = DateTime.Now;
+
+                    //_orders.TotalAmount = (decimal)form["Total_money"];
+                    _orders.TotalAmount = decimal.Parse(form["Total_money"]);
+                    _orders.PaymentMethod = form["Payment"];
+                    _orders.PaymentStatus = "Pending";
+                    _db.Orders.Add(_orders);
+                    foreach (var item in cart.Items)
+                    {
+                        OrderDetails _orderDetails = new OrderDetails();
+                        _orderDetails.OrderID = _orders.OrderID;
+                        _orderDetails.ProductID = item._shopping_products.ProductID;
+                        _orderDetails.Quantity = item._shopping_quanity;
+                        _db.OrderDetails.Add(_orderDetails);
+                    }
+                    _db.SaveChanges();
+                    cart.clearCart();
+                    return RedirectToAction("Checkout_Success", "ShoppingCart");
+                    //return RedirectToAction("ShowToCart", "ShoppingCart");
                 }
-                _db.SaveChanges();
-                cart.clearCart();
-                return RedirectToAction("Checkout_Success","ShoppingCart");
+                catch
+                {
+                    return Content("Error");
+                }
             }
-            catch
+            else
             {
-                return Content("Error");
+                return RedirectToAction("Checkout_Fail", "ShoppingCart");
             }
+
         }
 
 

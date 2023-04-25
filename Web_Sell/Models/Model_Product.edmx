@@ -23,6 +23,15 @@
           <Property Name="OrderID" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="DeliveryDate" Type="date" Nullable="false" />
         </EntityType>
+        <EntityType Name="ManagerLogin">
+          <Key>
+            <PropertyRef Name="AgentID" />
+          </Key>
+          <Property Name="AgentID" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="isAdmin" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="OrderDetails">
           <Key>
             <PropertyRef Name="OrderID" />
@@ -54,6 +63,18 @@
           <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="ProImage" Type="image" />
         </EntityType>
+        <Association Name="FK__Agents__AgentID__09A971A2">
+          <End Role="ManagerLogin" Type="Self.ManagerLogin" Multiplicity="1" />
+          <End Role="Agents" Type="Self.Agents" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ManagerLogin">
+              <PropertyRef Name="AgentID" />
+            </Principal>
+            <Dependent Role="Agents">
+              <PropertyRef Name="AgentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AgentID">
           <End Role="Agents" Type="Self.Agents" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
@@ -105,9 +126,14 @@
         <EntityContainer Name="PhoneManagerModelStoreContainer">
           <EntitySet Name="Agents" EntityType="Self.Agents" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DeliverySlips" EntityType="Self.DeliverySlips" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ManagerLogin" EntityType="Self.ManagerLogin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Agents__AgentID__09A971A2" Association="Self.FK__Agents__AgentID__09A971A2">
+            <End Role="ManagerLogin" EntitySet="ManagerLogin" />
+            <End Role="Agents" EntitySet="Agents" />
+          </AssociationSet>
           <AssociationSet Name="FK_AgentID" Association="Self.FK_AgentID">
             <End Role="Agents" EntitySet="Agents" />
             <End Role="Orders" EntitySet="Orders" />
@@ -132,8 +158,14 @@
         <EntityContainer Name="PhoneManagerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Agents" EntityType="PhoneManagerModel.Agents" />
           <EntitySet Name="DeliverySlips" EntityType="PhoneManagerModel.DeliverySlips" />
+          <EntitySet Name="ManagerLogin" EntityType="PhoneManagerModel.ManagerLogin" />
+          <EntitySet Name="OrderDetails" EntityType="PhoneManagerModel.OrderDetails" />
           <EntitySet Name="Orders" EntityType="PhoneManagerModel.Orders" />
           <EntitySet Name="Products" EntityType="PhoneManagerModel.Products" />
+          <AssociationSet Name="FK__Agents__AgentID__09A971A2" Association="PhoneManagerModel.FK__Agents__AgentID__09A971A2">
+            <End Role="ManagerLogin" EntitySet="ManagerLogin" />
+            <End Role="Agents" EntitySet="Agents" />
+          </AssociationSet>
           <AssociationSet Name="FK_AgentID" Association="PhoneManagerModel.FK_AgentID">
             <End Role="Agents" EntitySet="Agents" />
             <End Role="Orders" EntitySet="Orders" />
@@ -142,7 +174,6 @@
             <End Role="Orders" EntitySet="Orders" />
             <End Role="DeliverySlips" EntitySet="DeliverySlips" />
           </AssociationSet>
-          <EntitySet Name="OrderDetails" EntityType="PhoneManagerModel.OrderDetails" />
           <AssociationSet Name="FK_OrderID" Association="PhoneManagerModel.FK_OrderID">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
@@ -151,7 +182,7 @@
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
           </AssociationSet>
-          </EntityContainer>
+        </EntityContainer>
         <EntityType Name="Agents">
           <Key>
             <PropertyRef Name="AgentID" />
@@ -161,6 +192,7 @@
           <Property Name="ContactName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ManagerLogin" Relationship="PhoneManagerModel.FK__Agents__AgentID__09A971A2" FromRole="Agents" ToRole="ManagerLogin" />
           <NavigationProperty Name="Orders" Relationship="PhoneManagerModel.FK_AgentID" FromRole="Agents" ToRole="Orders" />
         </EntityType>
         <EntityType Name="DeliverySlips">
@@ -171,6 +203,27 @@
           <Property Name="OrderID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
           <NavigationProperty Name="Orders" Relationship="PhoneManagerModel.FK_DeliverySlip_OrderID" FromRole="DeliverySlips" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="ManagerLogin">
+          <Key>
+            <PropertyRef Name="AgentID" />
+          </Key>
+          <Property Name="AgentID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isAdmin" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Agents" Relationship="PhoneManagerModel.FK__Agents__AgentID__09A971A2" FromRole="ManagerLogin" ToRole="Agents" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderID" />
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="OrderID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ProductID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="PhoneManagerModel.FK_OrderID" FromRole="OrderDetails" ToRole="Orders" />
+          <NavigationProperty Name="Products" Relationship="PhoneManagerModel.FK_ProductID" FromRole="OrderDetails" ToRole="Products" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -198,6 +251,18 @@
           <Property Name="ProImage" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="OrderDetails" Relationship="PhoneManagerModel.FK_ProductID" FromRole="Products" ToRole="OrderDetails" />
         </EntityType>
+        <Association Name="FK__Agents__AgentID__09A971A2">
+          <End Type="PhoneManagerModel.ManagerLogin" Role="ManagerLogin" Multiplicity="1" />
+          <End Type="PhoneManagerModel.Agents" Role="Agents" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ManagerLogin">
+              <PropertyRef Name="AgentID" />
+            </Principal>
+            <Dependent Role="Agents">
+              <PropertyRef Name="AgentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AgentID">
           <End Type="PhoneManagerModel.Agents" Role="Agents" Multiplicity="1" />
           <End Type="PhoneManagerModel.Orders" Role="Orders" Multiplicity="*" />
@@ -222,17 +287,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="OrderDetails">
-          <Key>
-            <PropertyRef Name="OrderID" />
-            <PropertyRef Name="ProductID" />
-          </Key>
-          <Property Name="OrderID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="ProductID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Orders" Relationship="PhoneManagerModel.FK_OrderID" FromRole="OrderDetails" ToRole="Orders" />
-          <NavigationProperty Name="Products" Relationship="PhoneManagerModel.FK_ProductID" FromRole="OrderDetails" ToRole="Products" />
-        </EntityType>
         <Association Name="FK_OrderID">
           <End Type="PhoneManagerModel.Orders" Role="Orders" Multiplicity="1" />
           <End Type="PhoneManagerModel.OrderDetails" Role="OrderDetails" Multiplicity="*" />
@@ -283,6 +337,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ManagerLogin">
+            <EntityTypeMapping TypeName="PhoneManagerModel.ManagerLogin">
+              <MappingFragment StoreEntitySet="ManagerLogin">
+                <ScalarProperty Name="isAdmin" ColumnName="isAdmin" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="AgentID" ColumnName="AgentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="PhoneManagerModel.OrderDetails">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="PhoneManagerModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
@@ -304,15 +377,6 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="OrderDetails">
-            <EntityTypeMapping TypeName="PhoneManagerModel.OrderDetails">
-              <MappingFragment StoreEntitySet="OrderDetails">
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

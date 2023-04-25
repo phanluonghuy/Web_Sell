@@ -1,21 +1,48 @@
 ﻿@model IEnumerable<Web_Sell.Models.Orders>
 
+
 @{
     ViewBag.Title = "My Orders";
     //Layout = "~/Views/_LayoutHome.cshtml";
 }
 
 <h2>My Orders</h2>
-<div class="container">
-    <div class="row">
-        @foreach (var item in Model)
-        {
-            <div class="col-sm-6 col-md-4 col-lg-3">
-                <div class="card">
-                    @Html.DisplayFor(model => item.OrderID) @Html.DisplayFor(model => item.PaymentMethod) @Html.DisplayFor(model => item.PaymentStatus) <br>
 
-                </div>
-            </div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Payment</th>
+            <th>Method</th>
+            <th>DeliverySlips</th>
+            @*<th>Quanity</th>
+        <th>Sum</th>
+        <th>Delete</th>*@
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var order in Model)
+        {
+
+            var agent = Model.FirstOrDefault(s => s.AgentID.Equals(Session["AgentID"]));
+            if (agent != null)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(model => order.OrderID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => order.PaymentMethod)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => order.PaymentStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => order.DeliverySlips)
+                    </td>
+                </tr>
+            }
         }
-    </div>
-</div>
+    </tbody>
+</table>

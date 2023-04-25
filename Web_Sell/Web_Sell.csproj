@@ -130,6 +130,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -139,6 +140,9 @@
     </Compile>
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\DeliverySlips.cs">
+      <DependentUpon>Model_Product.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ManagerLogin.cs">
       <DependentUpon>Model_Product.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Model_Product.Context.cs">
@@ -224,6 +228,9 @@
     <Content Include="Views\ShoppingCart\BagCart.cshtml" />
     <Content Include="Views\ShoppingCart\Checkout_Success.cshtml" />
     <Content Include="Views\Home\MyOrders.cshtml" />
+    <Content Include="Views\Login\Register.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\ShoppingCart\Checkout_Fail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

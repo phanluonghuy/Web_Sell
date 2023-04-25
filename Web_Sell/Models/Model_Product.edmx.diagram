@@ -5,16 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f16de527b1724066a13f87cd351fa54b" Name="Diagram1">
-        <EntityTypeShape EntityType="PhoneManagerModel.Agents" Width="1.5" PointX="0.75" PointY="2.25" />
-        <EntityTypeShape EntityType="PhoneManagerModel.DeliverySlips" Width="1.5" PointX="5.25" PointY="5.125" />
-        <EntityTypeShape EntityType="PhoneManagerModel.Orders" Width="1.5" PointX="3" PointY="1.875" />
-        <EntityTypeShape EntityType="PhoneManagerModel.Products" Width="1.5" PointX="3" PointY="7.125" />
+        <EntityTypeShape EntityType="PhoneManagerModel.Agents" Width="1.5" PointX="3" PointY="2.125" />
+        <EntityTypeShape EntityType="PhoneManagerModel.DeliverySlips" Width="1.5" PointX="7.5" PointY="5.125" />
+        <EntityTypeShape EntityType="PhoneManagerModel.ManagerLogin" Width="1.5" PointX="0.75" PointY="2.375" />
+        <EntityTypeShape EntityType="PhoneManagerModel.OrderDetails" Width="1.5" PointX="7.5" PointY="2.375" />
+        <EntityTypeShape EntityType="PhoneManagerModel.Orders" Width="1.5" PointX="5.25" PointY="1.875" />
+        <EntityTypeShape EntityType="PhoneManagerModel.Products" Width="1.5" PointX="5.25" PointY="7.125" />
+        <AssociationConnector Association="PhoneManagerModel.FK__Agents__AgentID__09A971A2" />
         <AssociationConnector Association="PhoneManagerModel.FK_AgentID" />
         <AssociationConnector Association="PhoneManagerModel.FK_DeliverySlip_OrderID" />
-        <EntityTypeShape EntityType="PhoneManagerModel.OrderDetails" Width="1.5" PointX="5.25" PointY="7.75" />
         <AssociationConnector Association="PhoneManagerModel.FK_OrderID" />
         <AssociationConnector Association="PhoneManagerModel.FK_ProductID" />
-        </Diagram>
+      </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

@@ -7,18 +7,18 @@
 <div class="container">
     <div class="row">
         @foreach (var item in Model)
-            {
-                <div class="col-sm-6 col-md-4 col-lg-3" >
-                    <div class="card">
-                        @Html.DisplayFor(model => item.Brand) @Html.DisplayFor(model => item.ProductName) <br>
-                        <img src="data:image;base64,@System.Convert.ToBase64String(item.ProImage)" width="80" height="80" /> <br>
-                        Description : @Html.DisplayFor(model => item.Description) <br>
-                        Price : @Html.DisplayFor(model => item.UnitPrice) <br>
-                        <a href="/ShoppingCart/AddtoCart/@item.ProductID">
-                            <img src="@Url.Content("~/Content/add-to-cart.png")" style="height:18px;width:18px" />
-                        </a>
-                    </div>
+        {
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="card">
+                    @Html.DisplayFor(model => item.Brand) @Html.DisplayFor(model => item.ProductName) <br>
+                    <img src="data:image;base64,@System.Convert.ToBase64String(item.ProImage)" width="80" height="80" /> <br>
+                    Description : @Html.DisplayFor(model => item.Description) <br>
+                    Price : @Html.DisplayFor(model => item.UnitPrice) <br>
+                    <a href="/ShoppingCart/AddtoCart/@item.ProductID">
+                        <img src="@Url.Content("~/Content/add-to-cart.png")" style="height:18px;width:18px" />
+                    </a>
                 </div>
-            }
+            </div>
+        }
     </div>
 </div>

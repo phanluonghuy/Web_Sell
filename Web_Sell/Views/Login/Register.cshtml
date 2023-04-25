@@ -1,0 +1,48 @@
+﻿@model Web_Sell.Models.Agents
+
+<h2>Register</h2>
+<body>
+    <div id="form-register">
+        @using (Html.BeginForm("Register", "Login", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                { 
+        <table>
+            <tr>
+                <th colspan="2">@*Register*@</th>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.AgentName)</td>
+                <td>@Html.TextBoxFor(m => m.AgentName)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.ContactName)</td>
+                <td>@Html.TextBoxFor(m => m.ContactName)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Phone)</td>
+                <td>@Html.TextBoxFor(m => m.Phone)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(m => m.Email)</td>
+                <td>@Html.TextBoxFor(m => m.Email)</td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    <input type="submit" value="Register" />
+                    <input type="reset" value="Reset" />
+                </td>
+            </tr>
+
+
+
+        </table>
+                }
+            }
+    </div>
+   
+</body>
+

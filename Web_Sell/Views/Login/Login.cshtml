@@ -1,0 +1,44 @@
+﻿@model Web_Sell.Models.ManagerLogin
+
+<h2>Login</h2>
+@if (TempData["isLogin"] != null)
+{
+<div class="alert alert-warning">
+    <strong!>You have entered an invalid username or password</strong!>
+</div>
+}
+<body>
+    <div id="form-register">
+        @using (Html.BeginForm("Authen", "Login", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            {
+                <table>
+                    <tr>
+                        <th colspan="2">@*Register*@</th>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.Username)</td>
+                        <td>@Html.TextBoxFor(m => m.Username)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.Password)</td>
+                        <td>@Html.TextBoxFor(m => m.Password)</td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <input type="submit" value="Login" class="btn btn-success" />
+                            <input type="reset" value="Reset" class="btn btn-success" />
+                        </td>
+                    </tr>
+
+
+
+                </table>
+            }
+        }
+    </div>
+
+</body>

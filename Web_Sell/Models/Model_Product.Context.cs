@@ -27,8 +27,9 @@ namespace Web_Sell.Models
     
         public virtual DbSet<Agents> Agents { get; set; }
         public virtual DbSet<DeliverySlips> DeliverySlips { get; set; }
+        public virtual DbSet<ManagerLogin> ManagerLogin { get; set; }
+        public virtual DbSet<OrderDetails> OrderDetails { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Products> Products { get; set; }
-        public virtual DbSet<OrderDetails> OrderDetails { get; set; }
     }
 }

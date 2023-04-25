@@ -23,13 +23,23 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("My Order", "MyOrders", "Home")</li>
+                    @if (Session["AgentID"] == null)
+                    {
+                        <li >@Html.ActionLink("Login", "Login", "Login")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("My Order", "MyOrders", "Home")</li>
+                        <li>@Html.ActionLink("Welcome back", "Index", "Home")</li>
+                        <li> @Html.ActionLink("Log Out", "Logout", "Login")</li>
+                    }
                     <li>
                         <a href="/ShoppingCart/ShowToCart">
                             <img src="@Url.Content("~/Content/shopping-cart.png")" style="height:30px;width:30px;background-color:lavenderblush;" />
                             @Html.Action("BagCart", "ShoppingCart")
                         </a>
                     </li>
+                   
                 </ul>
             </div>
         </div>

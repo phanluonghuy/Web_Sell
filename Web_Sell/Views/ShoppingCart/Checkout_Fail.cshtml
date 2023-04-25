@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "Checkout Fail";
+    //Layout = "~/Views/_LayoutHome.cshtml";
+}
+<body style="text-align:center">
+    <h2 class="alert alert-danger">Your order cannot be processed. Maybe you aren't logged in.</h2>
+    <br />
+    <a class="btn btn-success" href="@Url.Action("Login","Login")">Login</a> 
+    <a class="btn btn-success" href="@Url.Action("ShowToCart","ShoppingCart")">Back To Bag Cart</a>
+
+</body>
+
+
+

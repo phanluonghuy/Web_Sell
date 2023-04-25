@@ -6,7 +6,7 @@
 }
 
 <h2>ShowToCart</h2>
-@if (Model != null)
+@if (Model.Items != null)
 {
     <table class="table">
         <thead>
@@ -39,9 +39,9 @@
                     <td>
                         @using (Html.BeginForm("Update_Quantity_Product", "ShoppingCart"))
                         {
-                        <input type="hidden" value="@item._shopping_products.ProductID" name="Product_ID" />
-                        <input type="number" value="@item._shopping_quanity" name="Product_Quantity" />
-                        <input type="submit" value="Update Quantity">
+                            <input type="hidden" value="@item._shopping_products.ProductID" name="Product_ID" />
+                            <input type="number" value="@item._shopping_quanity" name="Product_Quantity" />
+                            <input type="submit" value="Update Quantity">
                         }
                     </td>
                     <td>
@@ -51,7 +51,7 @@
                         <a href="/ShoppingCart/RemoveProduct/@item._shopping_products.ProductID">Remove</a>
                     </td>
                 </tr>
-               
+
             }
         </tbody>
         <tfoot>
@@ -62,13 +62,8 @@
             {
                 <input type="hidden" value="@Model.total_money()" name="Total_money" />
                 <tr>
-
                     <td>
-                        Agent ID:
-                        <input type="text" name="AgentID" required /><br>
-                    </td>
-                    <td>
-                        <select name="Payment" required>
+                        <select name="Payment" class="form-control">
                             <option value="Cash">Cash</option>
                             <option value="VNPay">VNPay</option>
                             <option value="MoMo">MoMo</option>
@@ -81,5 +76,5 @@
             }
         </tfoot>
     </table>
-    <a href="@Url.Action("Index","Home")">Countinue to shopping ...</a>
+    <a href="@Url.Action("Index","Home")">Countinue to shopping</a>
 }

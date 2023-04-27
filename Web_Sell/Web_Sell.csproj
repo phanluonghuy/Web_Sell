@@ -166,9 +166,12 @@
     <Compile Include="Models\Orders.cs">
       <DependentUpon>Model_Product.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PayCompare.cs" />
+    <Compile Include="Models\PayLib.cs" />
     <Compile Include="Models\Products.cs">
       <DependentUpon>Model_Product.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -231,6 +234,7 @@
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\ShoppingCart\Checkout_Fail.cshtml" />
+    <Content Include="Views\Home\PaymentConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using Web_Sell.Models;
+using System.Net.Mail;
 
 namespace Web_Sell.Controllers
 {
@@ -86,16 +87,34 @@ namespace Web_Sell.Controllers
             Orders _orders = new Orders();
             if (Session["AgentID"] != null)
             {
+                string payment = form["Payment"];
+                if (payment == "VNPay")
+                    return RedirectToAction("Payment", "Home", new { amount = form["Total_money"].ToString() });
+                else return RedirectToAction("CheckOut_Import", "ShoppingCart", new { amount = form["Total_money"].ToString() });
+            }
+            else
+            {
+                return RedirectToAction("Checkout_Fail", "ShoppingCart");
+            }
+
+        }
+
+        public ActionResult CheckOut_Import(string amount)
+        {
+            Cart cart = Session["Cart"] as Cart;
+            Orders _orders = new Orders();
+            if (Session["AgentID"] != null)
+            {
                 try
                 {
-                    
+
                     _orders.OrderID = DateTime.Now.ToString("yyyyMMddHHmmss");
                     _orders.AgentID = (string)Session["AgentID"];
                     _orders.OrderDate = DateTime.Now;
 
-                    //_orders.TotalAmount = (decimal)form["Total_money"];
-                    _orders.TotalAmount = decimal.Parse(form["Total_money"]);
-                    _orders.PaymentMethod = form["Payment"];
+                    _orders.TotalAmount = decimal.Parse(amount);
+                    //_orders.TotalAmount = decimal.Parse(form["Total_money"]);
+                    _orders.PaymentMethod = "VNPay";
                     _orders.Status = "Pending";
                     _db.Orders.Add(_orders);
                     foreach (var item in cart.Items)
@@ -108,9 +127,35 @@ namespace Web_Sell.Controllers
                     }
                     _db.SaveChanges();
                     cart.clearCart();
-                    return RedirectToAction("Checkout_Success", "ShoppingCart");
-                    //return RedirectToAction("ShowToCart", "ShoppingCart");
-                }
+
+
+                //    try
+                //    {
+                //        MailMessage mail = new MailMessage();
+                //        mail.From = new MailAddress("sender@example.com");
+                //        mail.To.Add("phanhuy0406@example.com");
+                //        mail.Subject = "Test Email";
+                //        mail.Body = "This is a test email sent from ASP.NET MVC.";
+
+                    //        SmtpClient smtp = new SmtpClient();
+                    //        smtp.Host = "smtp.example.com";
+                    //        smtp.Port = 587;
+                    //        smtp.Credentials = new System.Net.NetworkCredential("sender@example.com", "password");
+                    //        smtp.EnableSsl = true;
+
+                    //        smtp.Send(mail);
+                    //        ViewBag.Message = "Email sent successfully.";
+                    //    }
+                    //    catch (Exception ex)
+                    //    {
+                    //        ViewBag.Error = "Error occurred while sending email. Error message: " + ex.Message;
+                    //    }
+
+
+
+                        return RedirectToAction("Checkout_Success", "ShoppingCart");
+                    //    //return RedirectToAction("ShowToCart", "ShoppingCart");
+                    }
                 catch
                 {
                     return Content("Error");

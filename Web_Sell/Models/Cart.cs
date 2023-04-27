@@ -48,6 +48,10 @@ namespace Web_Sell.Models
             var total = items.Sum(s => (double)(s._shopping_products.UnitPrice) * s._shopping_quanity);
             return total;
         }
+        public double final_money()
+        {
+            return Math.Round(total_money()*0.9);
+        }
         public void remove_product(string id)
         {
             items.RemoveAll(s => s._shopping_products.ProductID == id);

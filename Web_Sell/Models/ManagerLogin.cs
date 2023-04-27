@@ -20,6 +20,5 @@ namespace Web_Sell.Models
         public bool isAdmin { get; set; }
     
         public virtual Agents Agents { get; set; }
-        public string LoginErrorMessage { get; set; }
     }
 }

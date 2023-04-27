@@ -96,7 +96,7 @@ namespace Web_Sell.Controllers
                     //_orders.TotalAmount = (decimal)form["Total_money"];
                     _orders.TotalAmount = decimal.Parse(form["Total_money"]);
                     _orders.PaymentMethod = form["Payment"];
-                    _orders.PaymentStatus = "Pending";
+                    _orders.Status = "Pending";
                     _db.Orders.Add(_orders);
                     foreach (var item in cart.Items)
                     {

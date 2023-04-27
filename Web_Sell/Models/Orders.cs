@@ -17,8 +17,8 @@ namespace Web_Sell.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Orders()
         {
-            this.DeliverySlips = new HashSet<DeliverySlips>();
             this.OrderDetails = new HashSet<OrderDetails>();
+            this.DeliverySlips = new HashSet<DeliverySlips>();
         }
     
         public string OrderID { get; set; }
@@ -26,12 +26,12 @@ namespace Web_Sell.Models
         public System.DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
         public string PaymentMethod { get; set; }
-        public string PaymentStatus { get; set; }
+        public string Status { get; set; }
     
         public virtual Agents Agents { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DeliverySlips> DeliverySlips { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetails> OrderDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DeliverySlips> DeliverySlips { get; set; }
     }
 }

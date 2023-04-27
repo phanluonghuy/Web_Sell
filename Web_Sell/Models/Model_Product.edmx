@@ -50,7 +50,7 @@
           <Property Name="OrderDate" Type="date" Nullable="false" />
           <Property Name="TotalAmount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="PaymentMethod" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="PaymentStatus" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -157,7 +157,6 @@
       <Schema Namespace="PhoneManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="PhoneManagerEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Agents" EntityType="PhoneManagerModel.Agents" />
-          <EntitySet Name="DeliverySlips" EntityType="PhoneManagerModel.DeliverySlips" />
           <EntitySet Name="ManagerLogin" EntityType="PhoneManagerModel.ManagerLogin" />
           <EntitySet Name="OrderDetails" EntityType="PhoneManagerModel.OrderDetails" />
           <EntitySet Name="Orders" EntityType="PhoneManagerModel.Orders" />
@@ -170,10 +169,6 @@
             <End Role="Agents" EntitySet="Agents" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_DeliverySlip_OrderID" Association="PhoneManagerModel.FK_DeliverySlip_OrderID">
-            <End Role="Orders" EntitySet="Orders" />
-            <End Role="DeliverySlips" EntitySet="DeliverySlips" />
-          </AssociationSet>
           <AssociationSet Name="FK_OrderID" Association="PhoneManagerModel.FK_OrderID">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
@@ -181,6 +176,11 @@
           <AssociationSet Name="FK_ProductID" Association="PhoneManagerModel.FK_ProductID">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <EntitySet Name="DeliverySlips" EntityType="PhoneManagerModel.DeliverySlips" />
+          <AssociationSet Name="FK_DeliverySlip_OrderID" Association="PhoneManagerModel.FK_DeliverySlip_OrderID">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="DeliverySlips" EntitySet="DeliverySlips" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Agents">
@@ -194,15 +194,6 @@
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ManagerLogin" Relationship="PhoneManagerModel.FK__Agents__AgentID__09A971A2" FromRole="Agents" ToRole="ManagerLogin" />
           <NavigationProperty Name="Orders" Relationship="PhoneManagerModel.FK_AgentID" FromRole="Agents" ToRole="Orders" />
-        </EntityType>
-        <EntityType Name="DeliverySlips">
-          <Key>
-            <PropertyRef Name="DeliverySlipID" />
-          </Key>
-          <Property Name="DeliverySlipID" Type="Int32" Nullable="false" />
-          <Property Name="OrderID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Orders" Relationship="PhoneManagerModel.FK_DeliverySlip_OrderID" FromRole="DeliverySlips" ToRole="Orders" />
         </EntityType>
         <EntityType Name="ManagerLogin">
           <Key>
@@ -234,10 +225,10 @@
           <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="TotalAmount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="PaymentMethod" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="PaymentStatus" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Agents" Relationship="PhoneManagerModel.FK_AgentID" FromRole="Orders" ToRole="Agents" />
-          <NavigationProperty Name="DeliverySlips" Relationship="PhoneManagerModel.FK_DeliverySlip_OrderID" FromRole="Orders" ToRole="DeliverySlips" />
           <NavigationProperty Name="OrderDetails" Relationship="PhoneManagerModel.FK_OrderID" FromRole="Orders" ToRole="OrderDetails" />
+          <NavigationProperty Name="DeliverySlips" Relationship="PhoneManagerModel.FK_DeliverySlip_OrderID" FromRole="Orders" ToRole="DeliverySlips" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -275,18 +266,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DeliverySlip_OrderID">
-          <End Type="PhoneManagerModel.Orders" Role="Orders" Multiplicity="1" />
-          <End Type="PhoneManagerModel.DeliverySlips" Role="DeliverySlips" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Orders">
-              <PropertyRef Name="OrderID" />
-            </Principal>
-            <Dependent Role="DeliverySlips">
-              <PropertyRef Name="OrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OrderID">
           <End Type="PhoneManagerModel.Orders" Role="Orders" Multiplicity="1" />
           <End Type="PhoneManagerModel.OrderDetails" Role="OrderDetails" Multiplicity="*" />
@@ -311,6 +290,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DeliverySlips">
+          <Key>
+            <PropertyRef Name="DeliverySlipID" />
+          </Key>
+          <Property Name="DeliverySlipID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Orders" Relationship="PhoneManagerModel.FK_DeliverySlip_OrderID" FromRole="DeliverySlips" ToRole="Orders" />
+        </EntityType>
+        <Association Name="FK_DeliverySlip_OrderID">
+          <End Type="PhoneManagerModel.Orders" Role="Orders" Multiplicity="1" />
+          <End Type="PhoneManagerModel.DeliverySlips" Role="DeliverySlips" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="DeliverySlips">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -325,15 +325,6 @@
                 <ScalarProperty Name="ContactName" ColumnName="ContactName" />
                 <ScalarProperty Name="AgentName" ColumnName="AgentName" />
                 <ScalarProperty Name="AgentID" ColumnName="AgentID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DeliverySlips">
-            <EntityTypeMapping TypeName="PhoneManagerModel.DeliverySlips">
-              <MappingFragment StoreEntitySet="DeliverySlips">
-                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
-                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="DeliverySlipID" ColumnName="DeliverySlipID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -359,7 +350,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="PhoneManagerModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
@@ -377,6 +368,15 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeliverySlips">
+            <EntityTypeMapping TypeName="PhoneManagerModel.DeliverySlips">
+              <MappingFragment StoreEntitySet="DeliverySlips">
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="DeliverySlipID" ColumnName="DeliverySlipID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

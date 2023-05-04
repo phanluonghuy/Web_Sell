@@ -41,14 +41,14 @@
                         {
                             <input type="hidden" value="@item._shopping_products.ProductID" name="Product_ID" />
                             <input type="number" value="@item._shopping_quanity" name="Product_Quantity" />
-                            <input type="submit" value="Update Quantity">
+                            <input class="btn btn-info" type="submit" value="Update Quantity">
                         }
                     </td>
                     <td>
                         Total : @total
                     </td>
                     <td>
-                        <a href="/ShoppingCart/RemoveProduct/@item._shopping_products.ProductID">Remove</a>
+                        <a class="btn btn-danger"href="/ShoppingCart/RemoveProduct/@item._shopping_products.ProductID">Remove</a>
                     </td>
                 </tr>
 

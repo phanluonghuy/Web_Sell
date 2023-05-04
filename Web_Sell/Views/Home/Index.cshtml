@@ -2,21 +2,33 @@
 @{
     ViewBag.Title = "Home Page";
 }
-
-@*<a href="@Url.Action("Payment","Home")">Thanh toán</a>*@
-<h2>Index</h2>
+<style>
+    .card {
+        /*border-radius: 5px;
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);*/
+        width: 250px;
+        height: 350px;
+    }
+    .img {
+        width:120px; 
+        height: 120px;
+        margin-left:5px;
+        margin-bottom:5px;
+    }
+</style>
+<h2>List of products</h2>
 <div class="container">
     <div class="row">
         @foreach (var item in Model)
         {
             <div class="col-sm-6 col-md-4 col-lg-3">
                 <div class="card">
-                    @Html.DisplayFor(model => item.Brand) @Html.DisplayFor(model => item.ProductName) <br>
-                    <img src="data:image;base64,@System.Convert.ToBase64String(item.ProImage)" width="80" height="80" /> <br>
-                    Description : @Html.DisplayFor(model => item.Description) <br>
-                    Price : @Html.DisplayFor(model => item.UnitPrice) <br>
+                    <b>@Html.DisplayFor(model => item.Brand) @Html.DisplayFor(model => item.ProductName)</b> <br>
+                    <img class="img" src="data:image;base64,@System.Convert.ToBase64String(item.ProImage)"/> <br>
+                    @Html.DisplayFor(model => item.Description) <br>
+                    <big>Price : @Html.DisplayFor(model => item.UnitPrice) </big><br>
                     <a href="/ShoppingCart/AddtoCart/@item.ProductID">
-                        <img src="@Url.Content("~/Content/add-to-cart.png")" style="height:18px;width:18px" />
+                        <img src="@Url.Content("~/Content/add-to-cart.png")" style="height:36px;width:36px" />
                     </a>
                 </div>
             </div>

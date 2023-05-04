@@ -37,6 +37,13 @@ namespace Web_Sell.Controllers
             return View(_db.Orders.ToList());
         }
 
+
+        [HttpGet]
+        public ActionResult Detail(string _order_ID)
+        {
+            return View(_db.OrderDetails.Where(s=>s.OrderID == _order_ID).ToList());
+        }
+
         public ActionResult Payment(string amount)
         {
             //return RedirectToAction("CheckOut_VNPay", "ShoppingCart");

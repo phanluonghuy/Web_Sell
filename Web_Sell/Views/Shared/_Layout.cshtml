@@ -16,13 +16,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @if (Session["AgentID"] == null)
                     {
                         <li >@Html.ActionLink("Login", "Login", "Login")</li>
@@ -30,12 +27,12 @@
                     else
                     {
                         <li>@Html.ActionLink("My Order", "MyOrders", "Home")</li>
-                        <li>@Html.ActionLink("Welcome back", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Welcome", "Index", "Home")</li>
                         <li> @Html.ActionLink("Log Out", "Logout", "Login")</li>
                     }
                     <li>
                         <a href="/ShoppingCart/ShowToCart">
-                            <img src="@Url.Content("~/Content/shopping-cart.png")" style="height:30px;width:30px;background-color:lavenderblush;" />
+                            <img src="@Url.Content("~/Content/shopping-cart.png")" style="height:30px;width:30px;" />
                             @Html.Action("BagCart", "ShoppingCart")
                         </a>
                     </li>
@@ -48,7 +45,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Phan Luong Huy</p>
         </footer>
     </div>
 

@@ -1,44 +1,108 @@
 ﻿@model Web_Sell.Models.ManagerLogin
 
-<h2>Login</h2>
-@if (TempData["isLogin"] != null)
-{
-<div class="alert alert-warning">
-    <strong!>You have entered an invalid username or password</strong!>
-</div>
-}
-<body>
-    <div id="form-register">
-        @using (Html.BeginForm("Authen", "Login", FormMethod.Post))
-        {
-            @Html.AntiForgeryToken()
-            {
-                <table>
-                    <tr>
-                        <th colspan="2">@*Register*@</th>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(m => m.Username)</td>
-                        <td>@Html.TextBoxFor(m => m.Username)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(m => m.Password)</td>
-                        <td>@Html.TextBoxFor(m => m.Password)</td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <input type="submit" value="Login" class="btn btn-success" />
-                            <input type="reset" value="Reset" class="btn btn-success" />
-                        </td>
-                    </tr>
-
-
-
-                </table>
-            }
-        }
+@*<h2>Login</h2>
+    @if (TempData["isLogin"] != null)
+    {
+    <div class="alert alert-warning">
+        <strong!>You have entered an invalid username or password</strong!>
     </div>
+    }
+    <body>
+        <div id="form-register">
+            @using (Html.BeginForm("Authen", "Login", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                {
+                    <table>
+                        <tr>
+                            <td>@Html.LabelFor(m => m.Username)</td>
+                            <td>@Html.TextBoxFor(m => m.Username)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(m => m.Password)</td>
+                            <td>@Html.TextBoxFor(m => m.Password)</td>
+                        </tr>
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                <input type="submit" value="Login" class="btn btn-success" />
+                                <input type="reset" value="Reset" class="btn btn-success" />
+                            </td>
+                        </tr>
+                    </table>
+                }
+            }
+        </div>
+
+    </body>*@
+
+<style>
+    .divider:after,
+    .divider:before {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #eee;
+    }
+
+    .h-custom {
+        height: calc(100% - 73px);
+    }
+
+    .form-column {
+        margin-left: 25%;
+    }
+
+    .col-md-8 {
+        margin-left: 15%;
+    }
+</style>
+
+<body>
+    <section class="vh-100">
+        <div class="container-fluid h-custom">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src=@Url.Content("~/Content/draw2.png")
+                         class="img-fluid" alt="Sample image">
+                </div>
+                <div class="col-md-8 col-lg-4 col-xl-4 offset-xl-1" style="margin-top: 17%;">
+                        <h2>Login</h2>
+                        @using (Html.BeginForm("Authen", "Login", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            {
+                            <table>
+                                <tr class="form-outline mb-4">
+                                    <td>@Html.LabelFor(m => m.Username)</td>
+                                    <td>@Html.TextBoxFor(m => m.Username)</td>
+                                </tr>
+                          
+                                <tr class="form-outline mb-3">
+                                    <td>@Html.LabelFor(m => m.Password)</td>
+                                    <td>@Html.PasswordFor(m => m.Password)</td>
+                                </tr>
+                                
+
+                                <tr style="margin-top:150px">
+                                    <td class="d-flex justify-content-between align-items-center">
+                                        <a href="#!" class="text-body">Forgot password?</a>
+                                    </td>
+
+                                    <td value="Login" class="text-center text-lg-start mt-4 pt-2">
+                                        <button type="submit" class="btn btn-primary btn-lg"
+                                                style="padding-left: 2.5rem; padding-right: 2.5rem; margin-top: 30px;">
+                                            Login
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                            }
+                        }
+                    </div>
+            </div>
+        </div>
+    </section>
 
 </body>

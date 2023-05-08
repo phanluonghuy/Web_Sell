@@ -48,16 +48,11 @@ namespace Web_Sell.Controllers
             if (check == null)
             {
                 TempData["isLogin"] = "false";
-                //managerLogin.LoginErrorMessage = "Can not sign !! Please input correct";
                 return View("Login",managerLogin);      
             }
             else
             {
                 Session["AgentID"] = check.AgentID;
-                //Session["AgentName"] = _db.Agents.Where(s => s.AgentID == managerLogin.AgentID).ToString();
-                //var test = _db.Agents.Where(s => s.AgentID == managerLogin.AgentID); 
-                //var name = _db.ManagerLogin.Where(s=>s.AgentID == managerLogin.AgentID).FirstOrDefault();
-                //Session["name"] = name.AgentName;
                 var test = _db.Agents.Where(s=>s.AgentID== check.AgentID).FirstOrDefault();
                 if (test != null)
                 {

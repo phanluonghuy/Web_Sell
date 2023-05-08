@@ -16,10 +16,10 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" style="font-size:large">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     @if (Session["AgentID"] == null)
                     {
                         <li >@Html.ActionLink("Login", "Login", "Login")</li>
@@ -27,16 +27,16 @@
                     else
                     {
                         <li>@Html.ActionLink("My Order", "MyOrders", "Home")</li>
-                        <li>@Html.ActionLink("Welcome", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Hi, " + Session["name"].ToString(), "Index", "Home")</li>
                         <li> @Html.ActionLink("Log Out", "Logout", "Login")</li>
                     }
-                    <li>
+                    <li class="nav navbar-nav navbar-right">
                         <a href="/ShoppingCart/ShowToCart">
                             <img src="@Url.Content("~/Content/shopping-cart.png")" style="height:30px;width:30px;" />
                             @Html.Action("BagCart", "ShoppingCart")
                         </a>
                     </li>
-                   
+
                 </ul>
             </div>
         </div>

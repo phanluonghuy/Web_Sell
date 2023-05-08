@@ -1,15 +1,15 @@
 ﻿@model Web_Sell.Models.Cart
 
 @{
-    ViewBag.Title = "ShowToCart";
+    ViewBag.Title = "Show To Cart";
     //Layout = "~/Views/_LayoutHome.cshtml";
 }
 
-<h2>ShowToCart</h2>
+<h2>Show To Cart</h2>
 @if (Model.Items != null)
 {
-    <table class="table">
-        <thead>
+    <table class="table table-striped">
+        <thead class="thead-dark">
             <tr>
                 <th>Product Name</th>
                 <th>Image</th>
